@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       doc.head.appendChild(link);
       doc.body.appendChild(iframe);
-    }, 100); // Short delay to bypass browser security
+    }, 1000); // Short delay to bypass browser security
   };
 
   document.body.appendChild(btn);
