@@ -1,4 +1,3 @@
-// Create and insert the button into the page
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.createElement("button");
   btn.innerText = "About Blank";
@@ -15,36 +14,38 @@ document.addEventListener("DOMContentLoaded", () => {
   btn.style.zIndex = "1000";
 
   btn.onclick = () => {
-    const popup = window.open("about:blank", "_blank");
+    let popup = window.open("about:blank", "_blank");
     if (!popup || popup.closed) {
       alert(
-        "Popup blocked! Please allow popups for this site to open in an about:blank tab."
+        "Popup blocked! Please allow popups for this site."
       );
-    } else {
+      return;
+    }
+
+    setTimeout(() => {
       const doc = popup.document;
       const iframe = doc.createElement("iframe");
-      const style = iframe.style;
       const link = doc.createElement("link");
 
-      const name = localStorage.getItem("name") || "My Drive - Google Drive";
-      const icon =
+      // Set custom title and icon (optional)
+      doc.title = localStorage.getItem("name") || "My Drive - Google Drive";
+      link.rel = "icon";
+      link.href =
         localStorage.getItem("icon") ||
         "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-      doc.title = name;
-      link.rel = "icon";
-      link.href = icon;
-
+      // Configure iframe
       iframe.src = location.href;
-      style.position = "fixed";
-      style.top = style.bottom = style.left = style.right = 0;
-      style.border = "none";
-      style.width = style.height = "100%";
+      iframe.style.position = "fixed";
+      iframe.style.top = iframe.style.bottom = iframe.style.left = iframe.style.right = 0;
+      iframe.style.border = "none";
+      iframe.style.width = iframe.style.height = "100%";
 
       doc.head.appendChild(link);
       doc.body.appendChild(iframe);
-    }
+    }, 100); // Short delay to bypass browser security
   };
 
   document.body.appendChild(btn);
 });
+
