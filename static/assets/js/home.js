@@ -14,20 +14,26 @@ document.addEventListener("DOMContentLoaded", () => {
   btn.style.zIndex = "1000";
 
   btn.onclick = () => {
-    window.location.replace("https://google.com");
-    
-    const win = window.open();
+    // Open popup immediately within user interaction
+    const win = window.open("about:blank", "_blank");
+
     if (win) {
-      const iframe = win.document.createElement("iframe");
       win.document.body.setAttribute("style", "margin: 0; height: 100vh; width: 100%;");
+
+      const iframe = win.document.createElement("iframe");
       iframe.setAttribute("style", "border: none; width: 100%; height: 100%; margin: 0;");
       iframe.src = window.location.href;
+      
       win.document.body.appendChild(iframe);
     } else {
       alert("Popup blocked! Please allow popups for this site.");
     }
+
+    // Redirect the main page after the popup is opened
+    setTimeout(() => {
+      window.location.replace("https://google.com");
+    }, 500); // Slight delay to ensure popup opens first
   };
 
   document.body.appendChild(btn);
 });
-
